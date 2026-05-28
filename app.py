@@ -44,7 +44,7 @@ button {
 st.title("AI Powered Marketing Intelligence Dashboard")
 
 # ================= LOAD MODELS =================
- @st.cache_resource
+@st.cache_resource
 def load_assets():
     
 xgb_path = hf_hub_download(
