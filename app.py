@@ -53,7 +53,7 @@ def load_assets():
     )
 
     features_path = hf_hub_download(
-        repo_id="AI908/marketing-campaign-featuress",
+        repo_id="AI908/marketing-campaign-features",
         filename="xgb_features.pkl"
     )
 
