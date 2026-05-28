@@ -47,12 +47,12 @@ st.title("AI Powered Marketing Intelligence Dashboard")
   xgb_path = hf_hub_download(
         repo_id="AI908/marketing-campaign-model",
         filename="xgb_model.pkl"
-    )
+)
 
  features_path = hf_hub_download(
         repo_id="AI908/marketing-campaign-featuress",
         filename="xgb_features.pkl"
-    )
+)
 
 kmeans_path = hf_hub_download(
     repo_id="AI908/marketing-campaign-model",
