@@ -46,47 +46,47 @@ st.title("AI Powered Marketing Intelligence Dashboard")
 # ================= LOAD MODELS =================
 @st.cache_resource
 def load_assets():
-    
-xgb_path = hf_hub_download(
+
+    xgb_path = hf_hub_download(
         repo_id="AI908/marketing-campaign-model",
         filename="xgb_model.pkl"
-)
+    )
 
- features_path = hf_hub_download(
+    features_path = hf_hub_download(
         repo_id="AI908/marketing-campaign-featuress",
         filename="xgb_features.pkl"
-)
+    )
 
-kmeans_path = hf_hub_download(
-    repo_id="AI908/marketing-campaign-model",
-    filename="kmeans_model.pkl"
-)
+    kmeans_path = hf_hub_download(
+        repo_id="AI908/marketing-campaign-model",
+        filename="kmeans_model.pkl"
+    )
 
-scaler_path = hf_hub_download(
-    repo_id="AI908/marketing-campaign-scaler",
-    filename="scaler.pkl"
-)
+    scaler_path = hf_hub_download(
+        repo_id="AI908/marketing-campaign-scaler",
+        filename="scaler.pkl"
+    )
 
-labels_path = hf_hub_download(
-    repo_id="AI908/marketing-ca,paign-labels",
-    filename="cluster_labels.pkl"
-)
+    labels_path = hf_hub_download(
+        repo_id="AI908/marketing-campaign-labels",
+        filename="cluster_labels.pkl"
+    )
 
-xgb_model = joblib.load(xgb_path)
-kmeans_model = joblib.load(kmeans_path)
-xgb_features=joblib.load(features-path)
-scaler = joblib.load(scaler_path)
-cluster_labels = joblib.load(labels_path)
+    # LOAD MODELS
+    xgb_model = joblib.load(xgb_path)
+    xgb_features = joblib.load(features_path)
+    kmeans_model = joblib.load(kmeans_path)
+    scaler = joblib.load(scaler_path)
+    cluster_labels = joblib.load(labels_path)
+
+    # LOAD DATA
+    df = pd.read_csv("Digital_marketing_campaign_data.csv")
+    df.columns = df.columns.str.strip()
+
+    return xgb_model, kmeans_model, xgb_features, scaler, cluster_labels, df
 
 
-# ================= LOAD DATA =================
-
-df = pd.read_csv("Digital_marketing_campaign_data.csv")
-df.columns = df.columns.str.strip()
- return xgb_model, kmeans_model, scaler, cluster_labels, df
-
-
-xgb_model, kmeans_model,xgb_features, scaler, cluster_labels, df = load_assets()
+xgb_model, kmeans_model, xgb_features, scaler, cluster_labels, df = load_assets()
 
 # ================= FEATURE ENGINEERING =================
 df["EngagementScore"] = (
@@ -103,6 +103,7 @@ df_enc = pd.get_dummies(
 )
 
 X = df_enc.reindex(columns=scaler.feature_names_in_, fill_value=0)
+
 df["Cluster"] = kmeans_model.predict(scaler.transform(X))
 df["ClusterLabel"] = df["Cluster"].map(cluster_labels)
 
@@ -260,7 +261,7 @@ with tab2:
 
         st.info(f"Scenario {best} is expected to perform better based on simulated engagement factors.")
 
-# ================= AI INSIGHTS (FULL DYNAMIC ENGINE) =================
+# ================= AI INSIGHTS =================
 with tab3:
 
     st.subheader("Performance Analysis")
@@ -279,7 +280,6 @@ with tab3:
     c2.metric("CTR", f"{ctr_avg*100:.2f}%")
     c3.metric("Conversion", f"{conv_avg*100:.2f}%")
 
-    # ================= REAL DATA-DRIVEN INSIGHT =================
     metrics_gap = {
         "Engagement": eng_avg - eng_global,
         "CTR": ctr_avg - ctr_global,
@@ -292,13 +292,13 @@ with tab3:
     score = sum(metrics_gap.values())
 
     if score > 0.15:
-        insight = f"Strong campaign performance. {best_metric} is the leading driver above benchmark."
+        insight = f"Strong campaign performance. {best_metric} is leading."
     elif score > 0:
-        insight = f"Good performance overall. {best_metric} is strong but {worst_metric} needs improvement."
+        insight = f"Good performance. Improve {worst_metric}."
     elif score > -0.15:
-        insight = f"Average performance detected. Focus on improving {worst_metric} to boost results."
+        insight = f"Average performance. Focus on {worst_metric}."
     else:
-        insight = f"Below benchmark performance. Immediate optimization needed in {worst_metric}."
+        insight = f"Below benchmark. Immediate action needed in {worst_metric}."
 
     best_campaign = filtered.loc[filtered["EngagementScore"].idxmax()]
     best_channel = filtered.groupby("CampaignChannel")["EngagementScore"].mean().idxmax()
@@ -307,3 +307,4 @@ with tab3:
     st.write("Best Channel:", best_channel)
 
     st.success(insight)
+    
