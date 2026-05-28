@@ -44,7 +44,10 @@ button {
 st.title("AI Powered Marketing Intelligence Dashboard")
 
 # ================= LOAD MODELS =================
-  xgb_path = hf_hub_download(
+ @st.cache_resource
+def load_assets():
+    
+xgb_path = hf_hub_download(
         repo_id="AI908/marketing-campaign-model",
         filename="xgb_model.pkl"
 )
