@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import joblib
+from huggingface_hub import hf_hub_download
 import numpy as np
 import plotly.express as px
 
@@ -42,13 +43,47 @@ button {
 
 st.title("AI Powered Marketing Intelligence Dashboard")
 
+# ================= LOAD MODELS =================
+  xgb_path = hf_hub_download(
+        repo_id="AI908/marketing-campaign-model",
+        filename="xgb_model.pkl"
+    )
+
+ features_path = hf_hub_download(
+        repo_id="AI908/marketing-campaign-featuress",
+        filename="xgb_features.pkl"
+    )
+
+kmeans_path = hf_hub_download(
+    repo_id="AI908/marketing-campaign-model",
+    filename="kmeans_model.pkl"
+)
+
+scaler_path = hf_hub_download(
+    repo_id="AI908/marketing-campaign-scaler",
+    filename="scaler.pkl"
+)
+
+labels_path = hf_hub_download(
+    repo_id="AI908/marketing-ca,paign-labels",
+    filename="cluster_labels.pkl"
+)
+
+xgb_model = joblib.load(xgb_path)
+kmeans_model = joblib.load(kmeans_path)
+xgb_features=joblib.load(features-path)
+scaler = joblib.load(scaler_path)
+cluster_labels = joblib.load(labels_path)
+
+
 # ================= LOAD DATA =================
-kmeans_model = joblib.load("kmeans_model.pkl")
-scaler = joblib.load("scaler.pkl")
-cluster_labels = joblib.load("cluster_labels.pkl")
 
 df = pd.read_csv("Digital_marketing_campaign_data.csv")
 df.columns = df.columns.str.strip()
+ return xgb_model, kmeans_model, scaler, cluster_labels, df
+
+
+xgb_model, kmeans_model,xgb_features, scaler, cluster_labels, df = load_assets()
 
 # ================= FEATURE ENGINEERING =================
 df["EngagementScore"] = (
