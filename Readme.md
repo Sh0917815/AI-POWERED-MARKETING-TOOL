@@ -5,8 +5,10 @@ It uses machine learning models (XGBoost, KMeans clustering, and a Scaler) to an
 The app includes interactive visualizations built with **Seaborn** and **Plotly**.
 
 ---
+## Live Demo
+https://ai-powered-marketing-tool-ejlnprlmbymhopx7q4kshk.streamlit.app/
 
-## 🚀 Features
+##  Features
 
 - Customer segmentation using **KMeans clustering**
 - Predictive analytics using **XGBoost**
@@ -18,7 +20,7 @@ The app includes interactive visualizations built with **Seaborn** and **Plotly*
 
 ---
 
-## 🧠 Machine Learning Models Used
+##  Machine Learning Models Used
 
 The app loads the following models:
 
