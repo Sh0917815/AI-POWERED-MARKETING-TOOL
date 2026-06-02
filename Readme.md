@@ -37,10 +37,10 @@ The app loads the following models:
 
 ## 📦 Installation
 
-Clone the repository:
+Clone the repository:https://github.com/Sh0917815/AI-POWERED-MARKETING-TOOL
 
-git clone https://github.com/yourusername/yourrepo.git (github.com in Bing)
-cd yourrepo
+git clone 
+cd AI-POWERED-MARKETING-TOOL
 
 Install dependencies:
 
@@ -57,14 +57,14 @@ streamlit run app.py
 ---
 
 ## 🗂 Project Structure
----
+
 project-name/
   app.py
   requirements.txt
   README.md
   data.csv
   .gitignore
----
+
 Model files are stored externally and loaded dynamically.
 
 ---
