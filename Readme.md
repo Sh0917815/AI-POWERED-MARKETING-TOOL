@@ -57,14 +57,14 @@ streamlit run app.py
 ---
 
 ## 🗂 Project Structure
-
+---
 ├── app.py
 ├── requirements.txt
 ├── README.md
 ├── data.csv
 └── .gitignore
 
-
+---
 Model files are stored externally and loaded dynamically.
 
 ---
